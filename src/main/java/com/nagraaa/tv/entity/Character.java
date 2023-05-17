@@ -3,7 +3,7 @@ package com.nagraaa.tv.entity;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "character")
+@Table(name = "characters")
 public class Character {
 
     @Id

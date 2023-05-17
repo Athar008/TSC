@@ -2,7 +2,7 @@ package com.nagraaa.tv.entity;
 
 import jakarta.persistence.*;
 @Entity
-@Table(name = "tv_show")
+@Table(name = "tv_shows")
 public class TvShow {
 
     @Id
