@@ -55,4 +55,6 @@ public class Character {
     public void setTvShowId(Long tvShowId) {
         this.tvShowId = tvShowId;
     }
+
+
 }

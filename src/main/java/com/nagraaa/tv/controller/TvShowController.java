@@ -5,11 +5,10 @@ import com.nagraaa.tv.entity.TvShow;
 import com.nagraaa.tv.interfaces.CharacterRepository;
 import com.nagraaa.tv.interfaces.TvShowRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -46,6 +45,30 @@ public class TvShowController {
         }
         return ResponseEntity.ok().body(characters);
     }
+
+    @PostMapping
+    public ResponseEntity<TvShow> createTvShow(@RequestBody TvShow tvShow) {
+        TvShow createdTvShow = tvShowRepository.save(tvShow);
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdTvShow);
+    }
+    @PostMapping("/{tvShowId}/characters")
+    public ResponseEntity<Character> createCharacter(
+            @PathVariable Long tvShowId,
+            @RequestBody Character character
+    ) {
+        Optional<TvShow> optionalTvShow = tvShowRepository.findById(tvShowId);
+        if (optionalTvShow.isPresent()) {
+            TvShow tvShow = optionalTvShow.get();
+            character.setTvShowId(tvShowId); // Set the TV show ID in the character object
+            Character createdCharacter = characterRepository.save(character);
+            return ResponseEntity.status(HttpStatus.CREATED).body(createdCharacter);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+
+
 
 
 
